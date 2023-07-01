@@ -1,0 +1,44 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:32768/postgres
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+#
+#  datasource:
+#    url: jdbc:postgresql://ec2-54-78-142-10.eu-west-1.compute.amazonaws.com:5432/deke70hfmircfo
+#    username: pxcxxkqezhajco
+#    password: ec0d6df02ec008cd06633147cab5d9c2d661eca1e08af6e8f832712f5388c2a2
+#    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: apartxhackathon@gmail.com
+    password: vwlqtsjzhrhpcwkw
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable:true
+
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 604800000 # 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
+
+
