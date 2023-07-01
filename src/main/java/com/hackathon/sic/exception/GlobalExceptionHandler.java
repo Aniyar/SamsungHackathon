@@ -39,6 +39,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(er, HttpStatus.NOT_FOUND);
     }
 
-
+    @ExceptionHandler({ InstructorNotAuthorizedException.class})
+    public final ResponseEntity<ErrorResponse> handleInstructorNotAuthorizedException(InstructorNotAuthorizedException ex){
+        ErrorResponse er = new ErrorResponse(ex.getClass().getName(), HttpStatus.NOT_ACCEPTABLE.toString(), ex.getMessage(), null);
+        return new ResponseEntity<>(er, HttpStatus.NOT_ACCEPTABLE);
+    }
 
 }

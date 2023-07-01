@@ -1,6 +1,7 @@
 package com.hackathon.sic.controller;
 
 import com.hackathon.sic.dto.CourseDTO;
+import com.hackathon.sic.dto.CourseFullDTO;
 import com.hackathon.sic.exception.CourseNotFoundException;
 import com.hackathon.sic.exception.InstructorNotFoundException;
 import com.hackathon.sic.exception.StudentNotFoundException;
@@ -29,19 +30,14 @@ public class CourseController {
 		return ResponseEntity.ok(service.getAllCourses());
 	}
 
-	@GetMapping()
-	public ResponseEntity<Course> getCourseById(@RequestParam Integer courseId) throws CourseNotFoundException {
-		return ResponseEntity.ok(service.getCourseById(courseId));
+
+	@GetMapping("/full")
+	public ResponseEntity<CourseFullDTO> getFullCourseById(@RequestParam Integer courseId) throws CourseNotFoundException {
+		return ResponseEntity.ok(service.getFullCourseById(courseId));
 	}
 
 
-	@PutMapping()
-	public ResponseEntity registerCourse(@RequestParam Integer courseId,
-	                                             @AuthenticationPrincipal UserDetails userDetails)
-			throws CourseNotFoundException, UserNotFoundException, StudentNotFoundException {
-		service.registerCourse(courseId, userDetails);
-		return ResponseEntity.ok().build();
-	}
+
 
 
 

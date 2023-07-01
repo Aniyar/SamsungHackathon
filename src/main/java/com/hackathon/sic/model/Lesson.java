@@ -4,6 +4,9 @@ package com.hackathon.sic.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Data
 @Entity
 @Table
@@ -22,5 +25,7 @@ public class Lesson {
 	private String lessonTitle;
 
 	private String lessonDescription;
+
+	private LocalDateTime lessonTime;
 
 }

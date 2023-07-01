@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -34,7 +35,7 @@ public class Course {
 			inverseJoinColumns = { @JoinColumn(name = "fk_instructor") })
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
-	private List<Instructor> instructors;
+	private Set<Instructor> instructors;
 
 	@ManyToMany
 	@JoinTable(name = "course_student",
@@ -42,13 +43,13 @@ public class Course {
 			inverseJoinColumns = { @JoinColumn(name = "fk_student") })
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
-	private List<Student> students;
+	private Set<Student> students;
 
 
 	@OneToMany(mappedBy="course")
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
-	private List<Lesson> lessons;
+	private Set<Lesson> lessons;
 
 
 	@OneToMany(mappedBy="course")

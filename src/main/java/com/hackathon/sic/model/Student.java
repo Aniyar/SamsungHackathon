@@ -32,5 +32,8 @@ public class Student {
 	@EqualsAndHashCode.Exclude
 	private School school;
 
-
+	@ManyToMany(mappedBy="students")
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
+	private List<Course> courses;
 }
