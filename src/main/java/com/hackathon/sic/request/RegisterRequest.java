@@ -19,8 +19,6 @@ public class RegisterRequest {
   @NotNull
   private String lastname;
   @NotNull
-  private String iin;
-  @NotNull
   private String password;
   @NotNull
   private Role role;

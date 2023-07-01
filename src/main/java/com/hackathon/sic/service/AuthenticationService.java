@@ -4,6 +4,10 @@ import com.hackathon.sic.config.JwtService;
 import com.hackathon.sic.exception.IncorrectVerificationCodeException;
 import com.hackathon.sic.exception.UserAlreadyExistsException;
 import com.hackathon.sic.exception.UserNotFoundException;
+import com.hackathon.sic.model.Instructor;
+import com.hackathon.sic.model.Student;
+import com.hackathon.sic.repository.InstructorRepository;
+import com.hackathon.sic.repository.StudentRepository;
 import com.hackathon.sic.request.AuthenticationRequest;
 import com.hackathon.sic.request.RegisterRequest;
 import com.hackathon.sic.request.VerifyEmailRequest;
@@ -43,6 +47,9 @@ public class AuthenticationService {
   private final AuthenticationManager authenticationManager;
   private final EmailService emailService;
 
+  private final InstructorRepository instructorRepository;
+  private final StudentRepository studentRepository;
+
   public void register(RegisterRequest request) throws UserAlreadyExistsException {
     if (repository.findByEmail(request.getEmail()).isPresent()){
       throw new UserAlreadyExistsException();
@@ -50,7 +57,6 @@ public class AuthenticationService {
     var user = User.builder()
             .email(request.getEmail())
             .password(passwordEncoder.encode(request.getPassword()))
-            .iin(request.getIin())
             .firstname(request.getFirstname())
             .lastname(request.getLastname())
             .role(request.getRole())
@@ -69,6 +75,23 @@ public class AuthenticationService {
     }
     user.setApproved(true);
     repository.save(user);
+
+    switch (user.getRole()){
+      case INSTRUCTOR -> {
+        Instructor instructor = Instructor.builder()
+                .user(user)
+                .build();
+        instructorRepository.save(instructor);
+      }
+
+      case STUDENT -> {
+        Student student = Student.builder()
+                .user(user)
+                .build();
+        studentRepository.save(student);
+      }
+    }
+
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
     saveUserToken(user, jwtToken);
@@ -168,7 +191,6 @@ public class AuthenticationService {
     UserInfoResponse info = UserInfoResponse.builder()
                                             .firstname(user.getFirstname())
                                             .lastname(user.getLastname())
-                                            .iin(user.getIin())
                                             .role(user.getRole())
                                             .email(user.getEmail())
                                             .build();

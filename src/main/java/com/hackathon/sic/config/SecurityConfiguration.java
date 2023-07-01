@@ -41,11 +41,11 @@ public class SecurityConfiguration {
             .csrf()
             .disable()
             .authorizeRequests()
-            .requestMatchers("/api/v1/cleaner/**").hasAnyRole(ADMIN.name(), CLEANER.name())
-            .requestMatchers(GET, "/api/v1/cleaner/**").hasAnyAuthority(ADMIN_READ.name(), CLEANER_READ.name())
-            .requestMatchers(POST, "/api/v1/cleaner/**").hasAnyAuthority(ADMIN_CREATE.name(), CLEANER_CREATE.name())
-            .requestMatchers(PUT, "/api/v1/cleaner/**").hasAnyAuthority(ADMIN_UPDATE.name(), CLEANER_UPDATE.name())
-            .requestMatchers(DELETE, "/api/v1/cleaner/**").hasAnyAuthority(ADMIN_DELETE.name(), CLEANER_DELETE.name())
+            .requestMatchers("/api/v1/instructor/**").hasAnyRole(ADMIN.name(), INSTRUCTOR.name())
+            .requestMatchers(GET, "/api/v1/instructor/**").hasAnyAuthority(ADMIN_READ.name(), INSTRUCTOR_READ.name())
+            .requestMatchers(POST, "/api/v1/instructor/**").hasAnyAuthority(ADMIN_CREATE.name(), INSTRUCTOR_CREATE.name())
+            .requestMatchers(PUT, "/api/v1/instructor/**").hasAnyAuthority(ADMIN_UPDATE.name(), INSTRUCTOR_UPDATE.name())
+            .requestMatchers(DELETE, "/api/v1/instructor/**").hasAnyAuthority(ADMIN_DELETE.name(), INSTRUCTOR_DELETE.name())
 
             .requestMatchers("/api/v1/admin/**").hasRole(ADMIN.name())
             .requestMatchers(GET, "/api/v1/admin/**").hasAuthority(ADMIN_READ.name())
@@ -53,16 +53,17 @@ public class SecurityConfiguration {
             .requestMatchers(PUT, "/api/v1/admin/**").hasAuthority(ADMIN_UPDATE.name())
             .requestMatchers(DELETE, "/api/v1/admin/**").hasAuthority(ADMIN_DELETE.name())
 
-            .requestMatchers("/api/v1/user/**").hasAnyRole(USER.name(), ADMIN.name(), LANDLORD.name(), CLEANER.name())
+            .requestMatchers("/api/v1/user/**").hasAnyRole(USER.name(), ADMIN.name(), STUDENT.name(), INSTRUCTOR.name())
 
-            .requestMatchers("/api/v1/landlord/**").hasAnyRole(ADMIN.name(), LANDLORD.name())
-            .requestMatchers(GET, "/api/v1/landlord/**").hasAnyAuthority(ADMIN_READ.name(), LANDLORD_READ.name())
-            .requestMatchers(POST, "/api/v1/landlord/**").hasAnyAuthority(ADMIN_CREATE.name(), LANDLORD_CREATE.name())
-            .requestMatchers(PUT, "/api/v1/landlord/**").hasAnyAuthority(ADMIN_UPDATE.name(), LANDLORD_UPDATE.name())
-            .requestMatchers(DELETE, "/api/v1/landlord/**").hasAnyAuthority(ADMIN_DELETE.name(), LANDLORD_DELETE.name())
+            .requestMatchers("/api/v1/student/**").hasAnyRole(ADMIN.name(), STUDENT.name())
+            .requestMatchers(GET, "/api/v1/student/**").hasAnyAuthority(ADMIN_READ.name(), STUDENT_READ.name())
+            .requestMatchers(POST, "/api/v1/student/**").hasAnyAuthority(ADMIN_CREATE.name(), STUDENT_CREATE.name())
+            .requestMatchers(PUT, "/api/v1/student/**").hasAnyAuthority(ADMIN_UPDATE.name(), STUDENT_UPDATE.name())
+            .requestMatchers(DELETE, "/api/v1/student/**").hasAnyAuthority(ADMIN_DELETE.name(), STUDENT_DELETE.name())
 
             .requestMatchers(
                     "/api/v1/home/**",
+                    "/api/v1/courses/**",
                     "/api/v1/auth/**",
                     "/v2/api-docs",
                     "/v3/api-docs",

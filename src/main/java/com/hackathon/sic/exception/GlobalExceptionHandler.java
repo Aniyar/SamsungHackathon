@@ -26,4 +26,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(er, HttpStatus.NOT_FOUND);
     }
 
+
+    @ExceptionHandler({ InstructorNotFoundException.class})
+    public final ResponseEntity<ErrorResponse> handleInstructorNotFoundException(InstructorNotFoundException ex){
+        ErrorResponse er = new ErrorResponse(ex.getClass().getName(), HttpStatus.NOT_FOUND.toString(), ex.getMessage(), null);
+        return new ResponseEntity<>(er, HttpStatus.NOT_FOUND);
+    }
+
 }

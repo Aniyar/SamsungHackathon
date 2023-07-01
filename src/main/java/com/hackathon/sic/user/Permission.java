@@ -10,15 +10,15 @@ public enum Permission {
     ADMIN_UPDATE("admin:update"),
     ADMIN_CREATE("admin:create"),
     ADMIN_DELETE("admin:delete"),
-    CLEANER_READ("cleaner:read"),
-    CLEANER_UPDATE("cleaner:update"),
-    CLEANER_CREATE("cleaner:create"),
-    CLEANER_DELETE("cleaner:delete"),
+    INSTRUCTOR_READ("instructor:read"),
+    INSTRUCTOR_UPDATE("instructor:update"),
+    INSTRUCTOR_CREATE("instructor:create"),
+    INSTRUCTOR_DELETE("instructor:delete"),
 
-    LANDLORD_READ("landlord:read"),
-    LANDLORD_UPDATE("landlord:update"),
-    LANDLORD_CREATE("landlord:create"),
-    LANDLORD_DELETE("landlord:delete")
+    STUDENT_READ("landlord:read"),
+    STUDENT_UPDATE("landlord:update"),
+    STUDENT_CREATE("landlord:create"),
+    STUDENT_DELETE("landlord:delete")
 
 
             ;

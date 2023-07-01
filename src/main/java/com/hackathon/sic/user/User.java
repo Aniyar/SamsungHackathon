@@ -34,7 +34,6 @@ public class User implements UserDetails {
 
   private String firstname;
   private String lastname;
-  private String iin;
 
   @Enumerated(EnumType.STRING)
   private Role role;
@@ -42,7 +41,6 @@ public class User implements UserDetails {
   private Boolean approved;
 
   private String imageUrl;
-  private BigDecimal rating;
 
   @OneToMany(mappedBy = "user")
   @ToString.Exclude

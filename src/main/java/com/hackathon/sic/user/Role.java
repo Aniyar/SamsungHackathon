@@ -23,21 +23,21 @@ public enum Role {
                   ADMIN_CREATE
           )
   ),
-  CLEANER(
+  INSTRUCTOR(
           Set.of(
-                  CLEANER_READ,
-                  CLEANER_UPDATE,
-                  CLEANER_DELETE,
-                  CLEANER_CREATE
+                  INSTRUCTOR_READ,
+                  INSTRUCTOR_UPDATE,
+                  INSTRUCTOR_DELETE,
+                  INSTRUCTOR_CREATE
           )
   ),
 
-  LANDLORD(
+  STUDENT(
           Set.of(
-                LANDLORD_READ,
-                LANDLORD_UPDATE,
-                LANDLORD_DELETE,
-                LANDLORD_CREATE
+                  STUDENT_READ,
+                  STUDENT_UPDATE,
+                  STUDENT_DELETE,
+                  STUDENT_CREATE
           )
   );
 
