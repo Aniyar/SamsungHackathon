@@ -63,6 +63,7 @@ public class SecurityConfiguration {
 
             .requestMatchers(
                     "/api/v1/home/**",
+                    "/api/v1/chat/**",
                     "/api/v1/courses/**",
                     "/api/v1/auth/**",
                     "/v2/api-docs",

@@ -1,14 +1,14 @@
 package com.hackathon.sic.controller;
 
 import com.hackathon.sic.dto.CourseFullDTO;
-import com.hackathon.sic.exception.CourseNotFoundException;
-import com.hackathon.sic.exception.InstructorNotAuthorizedException;
-import com.hackathon.sic.exception.InstructorNotFoundException;
-import com.hackathon.sic.exception.UserNotFoundException;
+import com.hackathon.sic.dto.LessonDTO;
+import com.hackathon.sic.exception.*;
 import com.hackathon.sic.repository.InstructorRepository;
 import com.hackathon.sic.request.AddCourseRequest;
 import com.hackathon.sic.request.AddLessonRequest;
+import com.hackathon.sic.service.GPTService;
 import com.hackathon.sic.service.InstructorService;
+import com.hackathon.sic.service.LessonService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 public class InstructorController {
 
 	private final InstructorService service;
+	private final LessonService lessonService;
+	private final GPTService gptService;
 
 	@PreAuthorize("hasAuthority('instructor:create')")
 	@PostMapping("/addCourse")
@@ -47,11 +49,32 @@ public class InstructorController {
 
 
 	@PreAuthorize("hasAuthority('instructor:create')")
-	@PostMapping("courses/addLesson")
+	@PostMapping("/courses/addLesson")
 	public ResponseEntity addLesson(@AuthenticationPrincipal UserDetails userDetails,
 	                                @RequestBody AddLessonRequest request) throws UserNotFoundException, InstructorNotFoundException, InstructorNotAuthorizedException, CourseNotFoundException {
 		service.addLesson(userDetails, request);
 		return ResponseEntity.ok().build();
 	}
+
+	@GetMapping("/courses/lessons/{lessonId}")
+	public ResponseEntity<LessonDTO> getLesson(@PathVariable Integer lessonId) throws LessonNotFoundException {
+		return ResponseEntity.ok(lessonService.getLessonById(lessonId));
+	}
+
+	@GetMapping("/gpt/createTest")
+	public ResponseEntity<String> gptCreateTest(@RequestParam Integer lessonId) throws LessonNotFoundException {
+		return ResponseEntity.ok(lessonService.gptCreateTest(lessonId));
+	}
+
+	@GetMapping("/gpt/example")
+	public ResponseEntity<String> gptGenerateExample(@RequestParam String prompt){
+		return ResponseEntity.ok(gptService.generateExample(prompt));
+	}
+
+	@GetMapping("/gpt/explanation")
+	public ResponseEntity<String> gptGenerateExplanation(@RequestParam String prompt){
+		return ResponseEntity.ok(gptService.generateExplanation(prompt));
+	}
+
 
 }
