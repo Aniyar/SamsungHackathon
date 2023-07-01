@@ -50,7 +50,7 @@ public class AuthenticationService {
   private final InstructorRepository instructorRepository;
   private final StudentRepository studentRepository;
 
-  public void register(RegisterRequest request) throws UserAlreadyExistsException {
+  public AuthenticationResponse register(RegisterRequest request) throws UserAlreadyExistsException {
     if (repository.findByEmail(request.getEmail()).isPresent()){
       throw new UserAlreadyExistsException();
     }
@@ -61,11 +61,34 @@ public class AuthenticationService {
             .lastname(request.getLastname())
             .role(request.getRole())
             .code(generateRandomCode())
-            .approved(false)
+            .approved(true)
             .build();
-    emailService.sendAuthorizationCode(user.getEmail(), user.getCode());
+    //emailService.sendAuthorizationCode(user.getEmail(), user.getCode());
     repository.save(user);
 
+    switch (user.getRole()){
+      case INSTRUCTOR -> {
+        Instructor instructor = Instructor.builder()
+                .user(user)
+                .build();
+        instructorRepository.save(instructor);
+      }
+
+      case STUDENT -> {
+        Student student = Student.builder()
+                .user(user)
+                .build();
+        studentRepository.save(student);
+      }
+    }
+
+    var jwtToken = jwtService.generateToken(user);
+    var refreshToken = jwtService.generateRefreshToken(user);
+    saveUserToken(user, jwtToken);
+    return AuthenticationResponse.builder()
+            .accessToken(jwtToken)
+            .refreshToken(refreshToken)
+            .build();
   }
 
   public AuthenticationResponse verify(VerifyEmailRequest request) throws UserNotFoundException, IncorrectVerificationCodeException {

@@ -36,6 +36,14 @@ public class Course {
 	@EqualsAndHashCode.Exclude
 	private List<Instructor> instructors;
 
+	@ManyToMany
+	@JoinTable(name = "course_student",
+			joinColumns = { @JoinColumn(name = "fk_course") },
+			inverseJoinColumns = { @JoinColumn(name = "fk_student") })
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
+	private List<Student> students;
+
 
 	@OneToMany(mappedBy="course")
 	@ToString.Exclude
