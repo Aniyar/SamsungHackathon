@@ -45,4 +45,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(er, HttpStatus.NOT_ACCEPTABLE);
     }
 
+    @ExceptionHandler({ GPTNoResponseException.class})
+    public final ResponseEntity<ErrorResponse> handleGPTNoResponseException(GPTNoResponseException ex){
+        ErrorResponse er = new ErrorResponse(ex.getClass().getName(), HttpStatus.NO_CONTENT.toString(), ex.getMessage(), null);
+        return new ResponseEntity<>(er, HttpStatus.NO_CONTENT);
+    }
+
+
+
 }

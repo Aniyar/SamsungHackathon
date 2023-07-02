@@ -6,6 +6,7 @@ import com.hackathon.sic.exception.*;
 import com.hackathon.sic.repository.InstructorRepository;
 import com.hackathon.sic.request.AddCourseRequest;
 import com.hackathon.sic.request.AddLessonRequest;
+import com.hackathon.sic.response.ChatResponse;
 import com.hackathon.sic.service.GPTService;
 import com.hackathon.sic.service.InstructorService;
 import com.hackathon.sic.service.LessonService;
@@ -62,17 +63,17 @@ public class InstructorController {
 	}
 
 	@GetMapping("/gpt/createTest")
-	public ResponseEntity<String> gptCreateTest(@RequestParam Integer lessonId) throws LessonNotFoundException {
+	public ResponseEntity<ChatResponse.Choice> gptCreateTest(@RequestParam Integer lessonId) throws LessonNotFoundException, GPTNoResponseException {
 		return ResponseEntity.ok(lessonService.gptCreateTest(lessonId));
 	}
 
 	@GetMapping("/gpt/example")
-	public ResponseEntity<String> gptGenerateExample(@RequestParam String prompt){
+	public ResponseEntity<ChatResponse.Choice> gptGenerateExample(@RequestParam String prompt) throws GPTNoResponseException {
 		return ResponseEntity.ok(gptService.generateExample(prompt));
 	}
 
 	@GetMapping("/gpt/explanation")
-	public ResponseEntity<String> gptGenerateExplanation(@RequestParam String prompt){
+	public ResponseEntity<ChatResponse.Choice> gptGenerateExplanation(@RequestParam String prompt) throws GPTNoResponseException {
 		return ResponseEntity.ok(gptService.generateExplanation(prompt));
 	}
 

@@ -1,9 +1,11 @@
 package com.hackathon.sic.service;
 
 import com.hackathon.sic.dto.LessonDTO;
+import com.hackathon.sic.exception.GPTNoResponseException;
 import com.hackathon.sic.exception.LessonNotFoundException;
 import com.hackathon.sic.model.Lesson;
 import com.hackathon.sic.repository.LessonRepository;
+import com.hackathon.sic.response.ChatResponse;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
@@ -21,7 +23,7 @@ public class LessonService {
 		return modelMapper.map(lesson, LessonDTO.class);
 	}
 
-	public String gptCreateTest(Integer lessonId) throws LessonNotFoundException {
+	public ChatResponse.Choice gptCreateTest(Integer lessonId) throws LessonNotFoundException, GPTNoResponseException {
 		Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(LessonNotFoundException::new);
 		String prompt = createTestBasedOnLessonPrompt(lesson);
 		return gptService.chat(prompt);

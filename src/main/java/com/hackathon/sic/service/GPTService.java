@@ -1,5 +1,6 @@
 package com.hackathon.sic.service;
 
+import com.hackathon.sic.exception.GPTNoResponseException;
 import com.hackathon.sic.model.Lesson;
 import com.hackathon.sic.request.ChatRequest;
 import com.hackathon.sic.response.ChatResponse;
@@ -27,7 +28,7 @@ public class GPTService {
 
 	@Value("${openai.api.url}")
 	private String apiUrl;
-	public String chat(String prompt){
+	public ChatResponse.Choice chat(String prompt) throws GPTNoResponseException {
 		ChatRequest request = new ChatRequest();
 		request.setMessages(Arrays.asList(
 				Map.of("role", "user", "content", prompt)
@@ -35,16 +36,16 @@ public class GPTService {
 		request.setModel(model);
 		ChatResponse response = restTemplate.postForObject(apiUrl, request, ChatResponse.class);
 		if (response == null) {
-			return "No response";
+			throw new GPTNoResponseException();
 		}
-		return response.getChoices().get(0).getMessage().getContent();
+		return response.getChoices().get(0);
 	}
 
-	public String generateExample(String prompt) {
+	public ChatResponse.Choice generateExample(String prompt) throws GPTNoResponseException {
 		return chat(prompt + "Приведи несколько примеров");
 	}
 
-	public String generateExplanation(String prompt) {
+	public ChatResponse.Choice generateExplanation(String prompt) throws GPTNoResponseException {
 		return chat(prompt + "Обьясни простыми словами");
 	}
 
