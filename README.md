@@ -19,7 +19,7 @@
 ## Запуск проекта
 
 Данный проект функционирует по домену https://samsung-hackathon-a26579dc694f.herokuapp.com.
-Фронт энд: **samsung-flhcnwxp5-whoock.vercel.app **
+Фронт энд: **samsung-flhcnwxp5-whoock.vercel.app**
 
 Для того, чтобы запустить проект локально, вам потребуется:
 
